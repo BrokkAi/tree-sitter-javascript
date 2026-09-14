@@ -14,6 +14,8 @@ It intentionally diverges where Brokk needs language support that is not yet
 available upstream. Unless you specifically need Brokk's changes, you may
 prefer the upstream project.
 
+Try the grammar in [Brokk's web playground](https://brokkai.github.io/tree-sitter-javascript/).
+
 ## Installation
 
 Add the Brokk-maintained JavaScript crate to your project:
