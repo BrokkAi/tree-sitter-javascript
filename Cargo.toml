@@ -1,7 +1,7 @@
 [package]
-name = "tree-sitter-javascript"
-description = "JavaScript grammar for tree-sitter"
-version = "0.25.0"
+name = "brokk-tree-sitter-javascript"
+description = "Brokk-maintained JavaScript grammar for the tree-sitter parsing library"
+version = "0.25.1"
 authors = [
   "Max Brunsfeld <maxbrunsfeld@gmail.com>",
   "Amaan Qureshi <amaanq12@gmail.com>",
@@ -10,7 +10,8 @@ license = "MIT"
 readme = "README.md"
 keywords = ["incremental", "parsing", "tree-sitter", "javascript"]
 categories = ["parser-implementations", "parsing", "text-editors"]
-repository = "https://github.com/tree-sitter/tree-sitter-javascript"
+repository = "https://github.com/BrokkAi/tree-sitter-javascript"
+homepage = "https://github.com/BrokkAi/tree-sitter-javascript"
 edition = "2021"
 autoexamples = false
 
@@ -21,7 +22,7 @@ include = [
   "queries/*",
   "src/*",
   "tree-sitter.json",
-  "LICENSE",
+  "/LICENSE",
 ]
 
 [lib]
@@ -35,3 +36,4 @@ cc = "1.2"
 
 [dev-dependencies]
 tree-sitter = "0.25.8"
+tree-sitter-javascript = "=0.25.0"

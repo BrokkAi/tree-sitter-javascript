@@ -5,6 +5,27 @@ fn main() {
     c_config
         .std("c11")
         .include(src_dir)
+        .define("tree_sitter_javascript", "brokk_tree_sitter_javascript")
+        .define(
+            "tree_sitter_javascript_external_scanner_create",
+            "brokk_tree_sitter_javascript_external_scanner_create",
+        )
+        .define(
+            "tree_sitter_javascript_external_scanner_destroy",
+            "brokk_tree_sitter_javascript_external_scanner_destroy",
+        )
+        .define(
+            "tree_sitter_javascript_external_scanner_scan",
+            "brokk_tree_sitter_javascript_external_scanner_scan",
+        )
+        .define(
+            "tree_sitter_javascript_external_scanner_serialize",
+            "brokk_tree_sitter_javascript_external_scanner_serialize",
+        )
+        .define(
+            "tree_sitter_javascript_external_scanner_deserialize",
+            "brokk_tree_sitter_javascript_external_scanner_deserialize",
+        )
         .flag_if_supported("-Wno-unused-parameter");
 
     #[cfg(target_env = "msvc")]
@@ -20,5 +41,5 @@ fn main() {
         println!("cargo:rerun-if-changed={}", scanner_path.to_str().unwrap());
     }
 
-    c_config.compile("tree-sitter-javascript");
+    c_config.compile("brokk-tree-sitter-javascript");
 }

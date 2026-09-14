@@ -10,7 +10,7 @@
 //! }
 //! "#;
 //! let mut parser = tree_sitter::Parser::new();
-//! let language = tree_sitter_javascript::LANGUAGE;
+//! let language = brokk_tree_sitter_javascript::LANGUAGE;
 //! parser
 //!     .set_language(&language.into())
 //!     .expect("Error loading JavaScript parser");
@@ -24,11 +24,11 @@
 use tree_sitter_language::LanguageFn;
 
 extern "C" {
-    fn tree_sitter_javascript() -> *const ();
+    fn brokk_tree_sitter_javascript() -> *const ();
 }
 
 /// The tree-sitter [`LanguageFn`] for this grammar.
-pub const LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_javascript) };
+pub const LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(brokk_tree_sitter_javascript) };
 
 /// The content of the [`node-types.json`] file for this grammar.
 ///
@@ -58,5 +58,16 @@ mod tests {
         parser
             .set_language(&super::LANGUAGE.into())
             .expect("Error loading JavaScript parser");
+    }
+
+    #[test]
+    fn test_can_coexist_with_the_upstream_javascript_grammar() {
+        let mut parser = tree_sitter::Parser::new();
+        parser
+            .set_language(&super::LANGUAGE.into())
+            .expect("Error loading Brokk JavaScript parser");
+        parser
+            .set_language(&tree_sitter_javascript::LANGUAGE.into())
+            .expect("Error loading upstream JavaScript parser");
     }
 }

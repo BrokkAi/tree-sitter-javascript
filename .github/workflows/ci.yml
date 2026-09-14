@@ -1,14 +1,9 @@
 name: CI
 
 on:
+  workflow_dispatch:
   push:
     branches: [master]
-    paths:
-      - grammar.js
-      - src/**
-      - test/**
-      - bindings/**
-      - binding.gyp
   pull_request:
     paths:
       - grammar.js
@@ -16,6 +11,8 @@ on:
       - test/**
       - bindings/**
       - binding.gyp
+      - Cargo.toml
+      - Cargo.lock
 
 concurrency:
   group: ${{github.workflow}}-${{github.ref}}
@@ -28,27 +25,26 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest, macos-14]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
-      - name: Set up tree-sitter
-        uses: tree-sitter/setup-action/cli@v2
-      - name: Set up examples
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          cache: npm
+          node-version: ${{vars.NODE_VERSION}}
+      - name: Install pinned Tree-sitter CLI
+        shell: bash
         run: |-
-          git config --global core.longpaths true
-          git clone https://github.com/npm/cli examples/cli --single-branch --depth=1 --filter=blob:none
-      - name: Run tests
-        uses: tree-sitter/parser-test-action@v3
-        with:
-          test-rust: true
-          test-node: true
-          test-python: true
-          test-go: true
-          test-swift: true
-      - name: Parse examples
-        uses: tree-sitter/parse-action@v4
-        with:
-          files: |
-            examples/*.js
-            examples/*.jsx
+          npm ci --legacy-peer-deps --ignore-scripts
+          npm rebuild tree-sitter-cli
+      - name: Verify generated parser
+        shell: bash
+        run: |-
+          npx tree-sitter generate
+          git diff --exit-code -- src
+      - name: Run parser tests
+        run: npx tree-sitter test
+      - name: Run Rust tests
+        run: cargo test --locked

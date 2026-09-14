@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-javascript
-        VERSION "0.25.0"
+        VERSION "0.25.1"
         DESCRIPTION "JavaScript grammar for tree-sitter"
-        HOMEPAGE_URL "https://github.com/tree-sitter/tree-sitter-javascript"
+        HOMEPAGE_URL "https://github.com/BrokkAi/tree-sitter-javascript"
         LANGUAGES C)
 
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)

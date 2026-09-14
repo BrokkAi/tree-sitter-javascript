@@ -1981,6 +1981,60 @@ b = <Foo.Bar.Baz.Baz></Foo.Bar.Baz.Baz>;
             (property_identifier)))))))
 
 ==============================================
+Reserved words as JSX attribute names
+==============================================
+
+const element = <div class="x" for={id} do if in extends />;
+const namespaced = <Widget keyword:class="x" keyword:for={id} />;
+const after = 1;
+
+---
+
+(program
+  (lexical_declaration
+    (variable_declarator
+      (identifier)
+      (jsx_self_closing_element
+        (identifier)
+        (jsx_attribute
+          (property_identifier)
+          (string
+            (string_fragment)))
+        (jsx_attribute
+          (property_identifier)
+          (jsx_expression
+            (identifier)))
+        (jsx_attribute
+          (property_identifier))
+        (jsx_attribute
+          (property_identifier))
+        (jsx_attribute
+          (property_identifier))
+        (jsx_attribute
+          (property_identifier)))))
+  (lexical_declaration
+    (variable_declarator
+      (identifier)
+      (jsx_self_closing_element
+        (identifier)
+        (jsx_attribute
+          (jsx_namespace_name
+            (identifier)
+            (identifier))
+          (string
+            (string_fragment)))
+        (jsx_attribute
+          (jsx_namespace_name
+            (identifier)
+            (identifier))
+          (jsx_expression
+            (identifier))))))
+  (lexical_declaration
+    (variable_declarator
+      (identifier)
+      (number))))
+
+==============================================
 Anonymous JSX element
 ==============================================
 
