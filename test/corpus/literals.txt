@@ -21,21 +21,36 @@ Numbers
 ---
 
 (program
-  (expression_statement (number))
-  (expression_statement (number))
-  (expression_statement (number))
-  (expression_statement (number))
-  (expression_statement (number))
-  (expression_statement (number))
-  (expression_statement (number))
-  (expression_statement (number))
-  (expression_statement (number))
-  (expression_statement (number))
-  (expression_statement (number))
-  (expression_statement (number))
-  (expression_statement (number))
-  (expression_statement (number))
-  (expression_statement (number)))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number))
+  (expression_statement
+    (number)))
 
 ============================================
 Unicode identifiers
@@ -47,11 +62,19 @@ const últimaVez = 1
 ---
 
 (program
-  (lexical_declaration (variable_declarator (identifier) (number)))
+  (lexical_declaration
+    (variable_declarator
+      (identifier)
+      (number)))
   (expression_statement
     (object
-      (pair (property_identifier) (string (string_fragment)))
-      (pair (string) (string)))))
+      (pair
+        (property_identifier)
+        (string
+          (string_fragment)))
+      (pair
+        (string)
+        (string)))))
 
 ==========================================
 Strings containing comment-like content
@@ -63,7 +86,10 @@ Strings containing comment-like content
 
 (program
   (expression_statement
-    (string (string_fragment) (escape_sequence) (string_fragment))))
+    (string
+      (string_fragment)
+      (escape_sequence)
+      (string_fragment))))
 
 ==========================================
 Quote escaping
@@ -81,16 +107,32 @@ Quote escaping
 ---
 
 (program
-  (expression_statement (string))
-  (expression_statement (string))
-  (expression_statement (string (escape_sequence)))
   (expression_statement
-    (string (string_fragment) (escape_sequence) (string_fragment)))
-  (expression_statement (string (escape_sequence)))
+    (string))
   (expression_statement
-    (string (string_fragment) (escape_sequence) (string_fragment)))
-  (expression_statement (string (string_fragment)))
-  (expression_statement (string (string_fragment))))
+    (string))
+  (expression_statement
+    (string
+      (escape_sequence)))
+  (expression_statement
+    (string
+      (string_fragment)
+      (escape_sequence)
+      (string_fragment)))
+  (expression_statement
+    (string
+      (escape_sequence)))
+  (expression_statement
+    (string
+      (string_fragment)
+      (escape_sequence)
+      (string_fragment)))
+  (expression_statement
+    (string
+      (string_fragment)))
+  (expression_statement
+    (string
+      (string_fragment))))
 
 ==========================================
 Line continuations
@@ -106,9 +148,15 @@ world';
 
 (program
   (expression_statement
-    (string (string_fragment) (escape_sequence) (string_fragment)))
+    (string
+      (string_fragment)
+      (escape_sequence)
+      (string_fragment)))
   (expression_statement
-    (string (string_fragment) (escape_sequence) (string_fragment))))
+    (string
+      (string_fragment)
+      (escape_sequence)
+      (string_fragment))))
 
 =========================================================
 JSX strings with unescaped newlines for TSX attributes
@@ -127,16 +175,22 @@ JSX strings with unescaped newlines for TSX attributes
     (jsx_element
       (jsx_opening_element
         (identifier)
-        (jsx_attribute (property_identifier) (string (string_fragment))))
+        (jsx_attribute
+          (property_identifier)
+          (string
+            (string_fragment))))
       (jsx_closing_element
         (identifier))))
- (expression_statement
-   (jsx_element
-     (jsx_opening_element
-       (identifier)
-       (jsx_attribute (property_identifier) (string (string_fragment))))
-     (jsx_closing_element
-       (identifier)))))
+  (expression_statement
+    (jsx_element
+      (jsx_opening_element
+        (identifier)
+        (jsx_attribute
+          (property_identifier)
+          (string
+            (string_fragment))))
+      (jsx_closing_element
+        (identifier)))))
 
 ===============================================
 JSX with HTML character references (entities)
@@ -149,28 +203,28 @@ JSX with HTML character references (entities)
 ----
 
 (program
-	(expression_statement
-		(jsx_element
-			(jsx_opening_element
-				(identifier))
-			(jsx_text)
-			(html_character_reference)
-			(jsx_text)
-			(jsx_closing_element
-				(identifier))))
-	(expression_statement
-		(jsx_element
-			(jsx_opening_element
-				(identifier)
-			(jsx_attribute
-				(property_identifier)
-				(string
-					(string_fragment)
-					(html_character_reference)
-					(string_fragment))))
-			(jsx_text)
-			(jsx_closing_element
-				(identifier)))))
+  (expression_statement
+    (jsx_element
+      (jsx_opening_element
+        (identifier))
+      (jsx_text)
+      (html_character_reference)
+      (jsx_text)
+      (jsx_closing_element
+        (identifier))))
+  (expression_statement
+    (jsx_element
+      (jsx_opening_element
+        (identifier)
+        (jsx_attribute
+          (property_identifier)
+          (string
+            (string_fragment)
+            (html_character_reference)
+            (string_fragment))))
+      (jsx_text)
+      (jsx_closing_element
+        (identifier)))))
 
 ===================================
 JSX literal ampersands and entities
@@ -201,5 +255,43 @@ const x = <p title="My Roles & Groups" href="?scope=repo&description=OctoLinker"
         (jsx_text)
         (jsx_text)
         (html_character_reference)
+        (jsx_closing_element
+          (identifier))))))
+
+=================================================
+JSX literal ampersands before closing quotes
+=================================================
+
+const x = <p tail="&" single='&' t="a &" href="/x?a=1&b=2">x</p>;
+
+---
+
+(program
+  (lexical_declaration
+    (variable_declarator
+      (identifier)
+      (jsx_element
+        (jsx_opening_element
+          (identifier)
+          (jsx_attribute
+            (property_identifier)
+            (string
+              (string_fragment)))
+          (jsx_attribute
+            (property_identifier)
+            (string
+              (string_fragment)))
+          (jsx_attribute
+            (property_identifier)
+            (string
+              (string_fragment)
+              (string_fragment)))
+          (jsx_attribute
+            (property_identifier)
+            (string
+              (string_fragment)
+              (string_fragment)
+              (string_fragment))))
+        (jsx_text)
         (jsx_closing_element
           (identifier))))))
