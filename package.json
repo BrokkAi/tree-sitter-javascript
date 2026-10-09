@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-javascript",
-  "version": "0.25.1",
+  "version": "0.25.2",
   "description": "Brokk-maintained Tree-sitter grammar for JavaScript",
   "repository": "https://github.com/BrokkAi/tree-sitter-javascript",
   "license": "MIT",
