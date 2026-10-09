@@ -21,14 +21,14 @@ Try the grammar in [Brokk's web playground](https://brokkai.github.io/tree-sitte
 Add the Brokk-maintained JavaScript crate to your project:
 
 ```sh
-cargo add brokk-tree-sitter-javascript@=0.25.2
+cargo add brokk-tree-sitter-javascript@=0.25.3
 ```
 
 Or add it directly to `Cargo.toml`:
 
 ```toml
 [dependencies]
-brokk-tree-sitter-javascript = "=0.25.2"
+brokk-tree-sitter-javascript = "=0.25.3"
 ```
 
 The npm and Python bindings retain their upstream-compatible package names but
