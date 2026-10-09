@@ -683,6 +683,7 @@ module.exports = grammar({
 
     _jsx_child: $ => choice(
       $.jsx_text,
+      alias(token('&'), $.jsx_text),
       $.html_character_reference,
       $._jsx_element,
       $.jsx_expression,
@@ -791,6 +792,7 @@ module.exports = grammar({
         '"',
         repeat(choice(
           alias($.unescaped_double_jsx_string_fragment, $.string_fragment),
+          alias(token.immediate('&'), $.string_fragment),
           $.html_character_reference,
         )),
         '"',
@@ -799,6 +801,7 @@ module.exports = grammar({
         '\'',
         repeat(choice(
           alias($.unescaped_single_jsx_string_fragment, $.string_fragment),
+          alias(token.immediate('&'), $.string_fragment),
           $.html_character_reference,
         )),
         '\'',

@@ -2648,6 +2648,18 @@
           "name": "jsx_text"
         },
         {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "&"
+            }
+          },
+          "named": true,
+          "value": "jsx_text"
+        },
+        {
           "type": "SYMBOL",
           "name": "html_character_reference"
         },
@@ -3124,6 +3136,18 @@
                     "value": "string_fragment"
                   },
                   {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "IMMEDIATE_TOKEN",
+                      "content": {
+                        "type": "STRING",
+                        "value": "&"
+                      }
+                    },
+                    "named": true,
+                    "value": "string_fragment"
+                  },
+                  {
                     "type": "SYMBOL",
                     "name": "html_character_reference"
                   }
@@ -3153,6 +3177,18 @@
                     "content": {
                       "type": "SYMBOL",
                       "name": "unescaped_single_jsx_string_fragment"
+                    },
+                    "named": true,
+                    "value": "string_fragment"
+                  },
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "IMMEDIATE_TOKEN",
+                      "content": {
+                        "type": "STRING",
+                        "value": "&"
+                      }
                     },
                     "named": true,
                     "value": "string_fragment"
