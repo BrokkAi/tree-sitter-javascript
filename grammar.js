@@ -813,10 +813,18 @@ module.exports = grammar({
     // so as to obtain a node in the CST.
     //
     // A literal ampersand must not consume the attribute's closing quote.
-    unescaped_double_jsx_string_fragment: _ => token.immediate(prec(1, /([^"&]|&[^#A-Za-z"])+/)),
+    unescaped_double_jsx_string_fragment: _ => token.immediate(prec(1, repeat1(choice(
+      prec(1, '\0'),
+      /([^"&]|&[^#A-Za-z"])+/,
+      seq('&', prec(1, '\0')),
+    )))),
 
     // same here
-    unescaped_single_jsx_string_fragment: _ => token.immediate(prec(1, /([^'&]|&[^#A-Za-z'])+/)),
+    unescaped_single_jsx_string_fragment: _ => token.immediate(prec(1, repeat1(choice(
+      prec(1, '\0'),
+      /([^'&]|&[^#A-Za-z'])+/,
+      seq('&', prec(1, '\0')),
+    )))),
 
     _jsx_attribute_value: $ => choice(
       alias($._jsx_string, $.string),
@@ -1073,14 +1081,25 @@ module.exports = grammar({
     // We give names to the token() constructs containing a regexp
     // so as to obtain a node in the CST.
     //
-    unescaped_double_string_fragment: _ => token.immediate(prec(1, /[^"\\\r\n]+/)),
+    //
+    // NUL gets its own higher-precedence alternative in each payload token:
+    // the pinned generator otherwise merges it into a negated class that
+    // excludes NUL, and a raw NUL would end the token.
+    unescaped_double_string_fragment: _ => token.immediate(prec(1, repeat1(choice(
+      prec(1, '\0'),
+      /[^"\\\r\n]+/,
+    )))),
 
     // same here
-    unescaped_single_string_fragment: _ => token.immediate(prec(1, /[^'\\\r\n]+/)),
+    unescaped_single_string_fragment: _ => token.immediate(prec(1, repeat1(choice(
+      prec(1, '\0'),
+      /[^'\\\r\n]+/,
+    )))),
 
     escape_sequence: _ => token.immediate(seq(
       '\\',
       choice(
+        prec(1, '\0'),
         /[^xu0-7]/,
         /[0-7]{1,3}/,
         /x[0-9a-fA-F]{2}/,
@@ -1091,14 +1110,15 @@ module.exports = grammar({
     )),
 
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
-    comment: _ => token(choice(
-      seq('//', /[^\r\n\u2028\u2029]*/),
-      seq(
-        '/*',
-        /[^*]*\*+([^/*][^*]*\*+)*/,
-        '/',
-      ),
-    )),
+    comment: _ => {
+      const nonStar = choice(prec(1, '\0'), /[^*]/);
+      return token(choice(
+        seq('//', repeat(choice(prec(1, '\0'), /[^\r\n\u2028\u2029]/))),
+        seq('/*', repeat(nonStar), repeat1('*'), repeat(seq(
+          choice(prec(1, '\0'), /[^/*]/), repeat(nonStar), repeat1('*'),
+        )), '/'),
+      ));
+    },
 
     template_string: $ => seq(
       '`',
